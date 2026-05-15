@@ -1,0 +1,848 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --washi:#faf8f3;
+  --washi2:#f4f0e8;
+  --washi3:#ede8dc;
+  --ink:#1e1a17;
+  --ink2:#4a3f38;
+  --ink3:#8a7a70;
+  --ink4:#b8a898;
+  --red:#9b2335;
+  --red2:#c0392b;
+  --gold:#b8860b;
+  --gold2:#d4a017;
+  --green:#2d6a4f;
+  --blue:#1a4a7a;
+  --border:#d4c9b8;
+  --border2:#e8e0d0;
+  --shadow:rgba(30,26,23,0.07);
+}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--washi);
+  color:var(--ink);
+  min-height:100vh;
+  font-size:14px;
+  line-height:1.6;
+}
+/* ─── HEADER ─── */
+.header{
+  background:var(--ink);
+  padding:0 1.5rem;
+  display:flex;align-items:center;gap:16px;
+  height:52px;
+  position:sticky;top:0;z-index:100;
+  border-bottom:2px solid var(--red);
+}
+.logo{
+  font-family:'Noto Serif JP',serif;
+  color:var(--washi);
+  font-size:17px;font-weight:500;
+  letter-spacing:0.08em;
+  display:flex;align-items:center;gap:10px;
+  flex-shrink:0;
+}
+.logo-mark{
+  width:28px;height:28px;border-radius:4px;
+  background:var(--red);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;color:white;
+  font-family:'Noto Serif JP',serif;
+  letter-spacing:0;
+}
+.header-stats{
+  display:flex;gap:20px;align-items:center;
+  margin-left:auto;
+}
+.hstat{
+  display:flex;align-items:center;gap:6px;
+  color:rgba(250,248,243,0.5);font-size:12px;
+}
+.hstat-num{color:var(--washi);font-weight:500;font-size:14px}
+.hstat-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(250,248,243,0.2);
+}
+/* ─── NAV ─── */
+.nav{
+  background:var(--washi2);
+  border-bottom:1px solid var(--border);
+  display:flex;padding:0 1.5rem;
+  overflow-x:auto;
+}
+.nav-btn{
+  padding:11px 18px;border:none;background:none;cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;
+  color:var(--ink3);
+  border-bottom:2px solid transparent;
+  transition:all 0.18s;white-space:nowrap;
+  display:flex;align-items:center;gap:7px;
+  margin-bottom:-1px;
+}
+.nav-btn:hover{color:var(--ink2)}
+.nav-btn.active{color:var(--red);border-bottom-color:var(--red);font-weight:500}
+.nav-icon{font-size:15px;opacity:0.8}
+/* ─── MAIN ─── */
+.main{padding:1.5rem;max-width:1080px;margin:0 auto}
+/* ─── PAGE TITLE ─── */
+.page-title{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:1.25rem;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+.page-title-text{
+  font-family:'Noto Serif JP',serif;
+  font-size:18px;font-weight:500;
+  color:var(--ink);
+}
+.page-title-count{
+  font-size:12px;color:var(--ink3);
+  font-family:'Noto Sans JP',sans-serif;font-weight:400;
+  margin-left:auto;
+  background:var(--washi3);
+  padding:3px 10px;border-radius:12px;
+  border:1px solid var(--border);
+}
+/* ─── CONTROLS ─── */
+.controls{
+  display:flex;gap:8px;margin-bottom:1.25rem;
+  flex-wrap:wrap;align-items:center;
+}
+.search-wrap{
+  flex:1;min-width:180px;position:relative;
+}
+.search-icon{
+  position:absolute;left:10px;top:50%;transform:translateY(-50%);
+  color:var(--ink4);font-size:13px;pointer-events:none;
+}
+.search-box{
+  width:100%;padding:8px 10px 8px 30px;
+  border:1px solid var(--border);border-radius:6px;
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;
+  background:white;color:var(--ink);outline:none;
+}
+.search-box:focus{border-color:var(--red);box-shadow:0 0 0 2px rgba(155,35,53,0.1)}
+.sel{
+  padding:8px 10px;border:1px solid var(--border);border-radius:6px;
+  font-size:13px;font-family:'Noto Sans JP',sans-serif;
+  background:white;color:var(--ink);outline:none;cursor:pointer;
+}
+.btn{
+  padding:7px 14px;border-radius:6px;font-size:13px;
+  font-family:'Noto Sans JP',sans-serif;cursor:pointer;
+  border:1px solid var(--border);background:white;color:var(--ink);
+  transition:all 0.15s;display:flex;align-items:center;gap:5px;
+  white-space:nowrap;
+}
+.btn:hover{background:var(--washi2);border-color:var(--ink4)}
+.btn.active-filter{background:var(--red);color:white;border-color:var(--red)}
+.btn.primary{background:var(--red);color:white;border-color:var(--red)}
+.btn.primary:hover{background:#7a1c28}
+.btn.danger{border-color:var(--red2);color:var(--red2)}
+/* ─── TABLE ─── */
+.card{
+  background:white;border:1px solid var(--border);
+  border-radius:8px;overflow:hidden;
+  box-shadow:0 1px 6px var(--shadow);
+}
+.word-table{width:100%;border-collapse:collapse}
+.word-table th{
+  text-align:left;padding:9px 14px;
+  font-size:11px;font-weight:500;letter-spacing:0.08em;
+  color:var(--ink3);border-bottom:1px solid var(--border);
+  background:var(--washi2);
+}
+.word-table td{
+  padding:11px 14px;border-bottom:1px solid var(--border2);
+  vertical-align:top;
+}
+.word-table tr:last-child td{border-bottom:none}
+.word-table tr:hover td{background:rgba(250,248,243,0.7)}
+.w-kanji{
+  font-family:'Noto Serif JP',serif;
+  font-size:20px;font-weight:500;color:var(--ink);line-height:1.2;
+}
+.w-reading{font-size:11px;color:var(--red);margin-top:3px;letter-spacing:0.05em}
+.w-meaning{font-size:13px;color:var(--ink2);line-height:1.5}
+.w-example{
+  font-size:12px;color:var(--ink3);margin-top:5px;
+  padding:6px 10px;background:var(--washi2);
+  border-radius:4px;border-left:2px solid var(--border);
+  line-height:1.6;
+}
+.w-example-cn{color:var(--ink4);margin-top:2px;font-size:11px}
+.tag{
+  display:inline-flex;align-items:center;
+  padding:2px 7px;border-radius:3px;
+  font-size:10px;font-weight:500;letter-spacing:0.04em;
+  margin:1px 2px 1px 0;
+}
+.tag-pos{background:#e8f0f8;color:#1a4a7a}
+.tag-syn{background:#e8f4ec;color:#2d6a4f}
+.tag-ant{background:#faeaea;color:#9b2335}
+.tag-yr{background:#faf0e0;color:#8a6000}
+.tag-done{background:#eaf8ee;color:#1a6b35}
+.ico-btn{
+  background:none;border:none;cursor:pointer;
+  font-size:16px;padding:4px 5px;border-radius:4px;
+  color:var(--ink3);transition:all 0.15s;
+}
+.ico-btn:hover{background:var(--washi2)}
+.ico-btn.gold{color:var(--gold)}
+.ico-btn.green{color:var(--green)}
+.expand-btn{
+  background:none;border:none;cursor:pointer;
+  font-size:11px;color:var(--red);padding:2px 0;
+  font-family:'Noto Sans JP',sans-serif;
+  text-decoration:underline;text-underline-offset:2px;
+}
+/* ─── PAGINATION ─── */
+.pager{
+  display:flex;align-items:center;gap:6px;
+  margin-top:1rem;flex-wrap:wrap;
+}
+.pager-info{font-size:12px;color:var(--ink3);margin-right:auto}
+.pager-btn{
+  width:30px;height:30px;border-radius:4px;
+  border:1px solid var(--border);background:white;
+  cursor:pointer;font-size:12px;color:var(--ink2);
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.12s;
+}
+.pager-btn:hover{background:var(--washi2)}
+.pager-btn.cur{background:var(--red);color:white;border-color:var(--red)}
+/* ─── FLASHCARD ─── */
+.fc-wrap{display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+.fc-mode-bar{
+  display:flex;gap:8px;background:var(--washi2);
+  padding:4px;border-radius:8px;border:1px solid var(--border);
+}
+.fc-mode-btn{
+  padding:6px 16px;border-radius:6px;border:none;
+  font-family:'Noto Sans JP',sans-serif;font-size:12px;
+  cursor:pointer;background:none;color:var(--ink3);transition:all 0.15s;
+}
+.fc-mode-btn.active{background:white;color:var(--ink);box-shadow:0 1px 3px var(--shadow)}
+.fc-prog-bar{width:100%;max-width:520px;height:3px;background:var(--border);border-radius:2px}
+.fc-prog-fill{height:100%;background:var(--red);border-radius:2px;transition:width 0.3s}
+.fc-counter{font-size:12px;color:var(--ink3)}
+.flashcard{width:100%;max-width:520px;height:300px;perspective:1200px;cursor:pointer}
+.card-inner{
+  width:100%;height:100%;position:relative;
+  transform-style:preserve-3d;
+  transition:transform 0.55s cubic-bezier(0.4,0,0.2,1);
+}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-face{
+  position:absolute;width:100%;height:100%;
+  backface-visibility:hidden;border-radius:10px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:2rem;text-align:center;
+  border:1px solid var(--border);
+  box-shadow:0 2px 16px var(--shadow);
+}
+.card-front{background:white}
+.card-back{
+  background:var(--ink);
+  transform:rotateY(180deg);
+}
+.card-label{font-size:10px;letter-spacing:0.15em;color:var(--ink4);margin-bottom:1rem;font-weight:500}
+.card-back .card-label{color:rgba(250,248,243,0.35)}
+.card-kanji{
+  font-family:'Noto Serif JP',serif;
+  font-size:54px;font-weight:400;color:var(--ink);line-height:1;
+}
+.card-reading{font-size:15px;color:var(--red);margin-top:8px;letter-spacing:0.08em}
+.card-back .card-reading{color:rgba(220,100,90,0.9)}
+.card-meaning{font-size:18px;color:var(--washi);font-weight:300;line-height:1.6;margin-top:4px}
+.card-ex{font-size:12px;color:rgba(250,248,243,0.5);margin-top:12px;line-height:1.7;max-width:380px}
+.card-hint{font-size:11px;color:var(--ink4);margin-top:1rem;letter-spacing:0.03em}
+.fc-actions{display:flex;gap:10px;align-items:center}
+.fc-btn{
+  padding:9px 22px;border-radius:6px;
+  border:1px solid var(--border);background:white;
+  cursor:pointer;font-family:'Noto Sans JP',sans-serif;
+  font-size:13px;color:var(--ink2);transition:all 0.15s;
+}
+.fc-btn:hover{background:var(--washi2)}
+.fc-btn.ok{border-color:var(--green);color:var(--green)}
+.fc-btn.ok:hover{background:rgba(45,106,79,0.08)}
+.fc-btn.ng{border-color:var(--red2);color:var(--red2)}
+.fc-btn.ng:hover{background:rgba(192,57,43,0.07)}
+/* ─── QUIZ ─── */
+.quiz-card{max-width:640px;margin:0 auto}
+.qtype-bar{display:flex;gap:6px;margin-bottom:1.25rem;flex-wrap:wrap}
+.qtype-chip{
+  padding:5px 14px;border-radius:20px;
+  border:1px solid var(--border);background:white;
+  cursor:pointer;font-size:12px;
+  font-family:'Noto Sans JP',sans-serif;
+  transition:all 0.15s;color:var(--ink2);
+}
+.qtype-chip.on{background:var(--red);color:white;border-color:var(--red)}
+.quiz-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem}
+.quiz-prog-txt{font-size:12px;color:var(--ink3)}
+.quiz-score{display:flex;gap:12px;font-size:13px}
+.q-ok{color:var(--green);font-weight:500}
+.q-ng{color:var(--red2);font-weight:500}
+.prog-bar{width:100%;height:3px;background:var(--border);border-radius:2px;margin-bottom:1.25rem}
+.prog-fill{height:100%;background:var(--red);border-radius:2px;transition:width 0.3s}
+.qtype-label{font-size:10px;letter-spacing:0.12em;color:var(--ink3);margin-bottom:6px;font-weight:500}
+.q-word{
+  font-family:'Noto Serif JP',serif;
+  font-size:34px;font-weight:400;color:var(--ink);
+  margin-bottom:6px;line-height:1.3;
+}
+.q-sub{font-size:13px;color:var(--ink3);margin-bottom:1.25rem}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.25rem}
+.opt{
+  padding:12px 14px;border:1.5px solid var(--border);border-radius:7px;
+  background:white;cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;
+  color:var(--ink);text-align:left;
+  transition:all 0.14s;
+  display:flex;align-items:center;gap:10px;line-height:1.4;
+}
+.opt:hover:not(:disabled){border-color:var(--red);background:rgba(155,35,53,0.03)}
+.opt.correct{border-color:var(--green)!important;background:rgba(45,106,79,0.07)!important;color:var(--green)!important}
+.opt.wrong{border-color:var(--red2)!important;background:rgba(192,57,43,0.06)!important;color:var(--red2)!important}
+.opt-ltr{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--washi2);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:500;
+}
+.q-explain{
+  background:var(--washi2);border-radius:6px;
+  padding:11px 14px;margin-bottom:1rem;
+  font-size:13px;color:var(--ink2);line-height:1.6;
+  border-left:3px solid var(--red);
+}
+.fill-in{
+  width:100%;padding:11px 13px;
+  border:1.5px solid var(--border);border-radius:7px;
+  font-family:'Noto Serif JP',serif;font-size:22px;
+  color:var(--ink);outline:none;margin-bottom:1rem;background:white;
+}
+.fill-in:focus{border-color:var(--red)}
+.fill-in.correct{border-color:var(--green);background:rgba(45,106,79,0.05)}
+.fill-in.wrong{border-color:var(--red2);background:rgba(192,57,43,0.04)}
+/* ─── RESULT ─── */
+.result-wrap{text-align:center;padding:2.5rem 1.5rem}
+.score-ring{
+  width:110px;height:110px;border-radius:50%;
+  border:5px solid var(--border);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  margin:0 auto 1.5rem;
+}
+.score-num{font-size:34px;font-weight:500;color:var(--red);line-height:1}
+.score-den{font-size:12px;color:var(--ink3)}
+.result-title{font-family:'Noto Serif JP',serif;font-size:20px;font-weight:500;margin-bottom:0.4rem}
+.result-sub{font-size:13px;color:var(--ink3);margin-bottom:1.5rem}
+.wrong-list{border-top:1px solid var(--border);margin-top:1rem;padding-top:1rem;text-align:left}
+.wrong-item{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:0.5px solid var(--border2)}
+/* ─── IMPORT ─── */
+.drop-zone{
+  border:2px dashed var(--border);border-radius:8px;
+  padding:2.5rem 2rem;text-align:center;cursor:pointer;
+  transition:all 0.18s;background:var(--washi2);margin-bottom:1.25rem;
+}
+.drop-zone:hover,.drop-zone.over{border-color:var(--red);background:rgba(155,35,53,0.03)}
+.drop-icon{font-size:40px;color:var(--ink4);margin-bottom:0.75rem}
+.drop-title{font-size:15px;font-weight:500;margin-bottom:0.4rem}
+.drop-sub{font-size:12px;color:var(--ink3);line-height:1.7}
+.fmt-guide{
+  background:var(--washi2);border-radius:6px;
+  padding:12px 14px;font-size:12px;line-height:1.9;
+  margin-bottom:1rem;border:1px solid var(--border);
+}
+.fmt-guide code{
+  background:rgba(155,35,53,0.08);
+  padding:1px 5px;border-radius:3px;
+  font-size:11px;color:var(--red);font-family:monospace;
+}
+.paste-area{
+  width:100%;height:180px;
+  border:1px solid var(--border);border-radius:6px;
+  padding:10px;font-family:monospace;font-size:11px;
+  color:var(--ink);background:white;resize:vertical;
+  outline:none;margin-bottom:1rem;
+}
+.paste-area:focus{border-color:var(--red)}
+.import-msg{font-size:13px;margin-top:0.75rem;min-height:20px}
+/* ─── EMPTY ─── */
+.empty{text-align:center;padding:3rem;color:var(--ink3);font-size:13px}
+/* ─── TOAST ─── */
+.toast{
+  position:fixed;bottom:1.5rem;right:1.5rem;
+  background:var(--ink);color:var(--washi);
+  padding:9px 16px;border-radius:6px;font-size:12px;
+  z-index:999;display:none;
+  border-left:3px solid var(--red);
+}
+.toast.show{display:block;animation:fadeUp 0.25s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+<script>
+const DEMO=[
+  {id:1,kanji:"曖昧",reading:"あいまい",meaning:"模糊不清；含混",pos:"形容動詞",example:"彼の態度は曖昧だ。",example_cn:"他的态度很暧昧。",synonyms:["不明瞭"],antonyms:["明確"],year:2014,bookmarked:false,mastered:false},
+  {id:2,kanji:"おろか",reading:"おろか",meaning:"不必说，何况",pos:"副詞",example:"日本語はおろか、英語もできない。",example_cn:"不要说日语，就连英语也不会。",synonyms:[],antonyms:[],year:2015,bookmarked:false,mastered:false},
+  {id:3,kanji:"隔たり",reading:"へだたり",meaning:"距离；差距；隔阂",pos:"名詞",example:"両者の意見には大きな隔たりがある。",example_cn:"两者之间的意见存在很大分歧。",synonyms:["差異","距離"],antonyms:[],year:2013,bookmarked:false,mastered:false},
+  {id:4,kanji:"憂鬱",reading:"ゆううつ",meaning:"忧郁；心情压抑",pos:"名詞・形容動詞",example:"梅雨の季節は憂鬱になる。",example_cn:"梅雨季节让人心情郁闷。",synonyms:["気が重い"],antonyms:["爽快"],year:2016,bookmarked:false,mastered:false},
+  {id:5,kanji:"凌ぐ",reading:"しのぐ",meaning:"克服；超过；胜过",pos:"動詞",example:"困難を凌いで成功した。",example_cn:"克服困难，获得了成功。",synonyms:["超える"],antonyms:[],year:2012,bookmarked:false,mastered:false},
+  {id:6,kanji:"寛大",reading:"かんだい",meaning:"宽大；宽宏大量",pos:"形容動詞",example:"先生は寛大な心で許してくれた。",example_cn:"老师宽宏大量地原谅了他。",synonyms:["寛容"],antonyms:["厳格"],year:2018,bookmarked:false,mastered:false},
+  {id:7,kanji:"把握",reading:"はあく",meaning:"掌握；理解；抓住",pos:"名詞・動詞",example:"状況をしっかり把握する。",example_cn:"牢牢掌握情况。",synonyms:["理解"],antonyms:[],year:2011,bookmarked:false,mastered:false},
+  {id:8,kanji:"皮肉",reading:"ひにく",meaning:"讽刺；挖苦",pos:"名詞・形容動詞",example:"皮肉を言うのはよくない。",example_cn:"说讽刺话是不好的。",synonyms:["嫌み"],antonyms:[],year:2017,bookmarked:false,mastered:false},
+  {id:9,kanji:"途方に暮れる",reading:"とほうにくれる",meaning:"不知所措；束手无策",pos:"慣用句",example:"突然の出来事に途方に暮れた。",example_cn:"面对突发事件，茫然无措。",synonyms:["困惑する"],antonyms:[],year:2019,bookmarked:false,mastered:false},
+  {id:10,kanji:"懐かしい",reading:"なつかしい",meaning:"怀念的；令人留恋的",pos:"形容詞",example:"故郷の風景が懐かしい。",example_cn:"对故乡的风景充满留恋。",synonyms:[],antonyms:[],year:2020,bookmarked:false,mastered:false},
+  {id:11,kanji:"斬新",reading:"ざんしん",meaning:"崭新；独特新颖",pos:"形容動詞",example:"斬新なデザインが注目を集めた。",example_cn:"崭新的设计吸引了众人目光。",synonyms:["独創的"],antonyms:["陳腐"],year:2021,bookmarked:false,mastered:false},
+  {id:12,kanji:"頑固",reading:"がんこ",meaning:"顽固；固执",pos:"形容動詞",example:"頑固な性格で人の意見を聞かない。",example_cn:"性格固执，不听别人意见。",synonyms:["意固地"],antonyms:["柔軟"],year:2022,bookmarked:false,mastered:false},
+  {id:13,kanji:"漠然",reading:"ばくぜん",meaning:"模糊；茫然",pos:"副詞・形容動詞",example:"漠然とした不安を感じた。",example_cn:"感到莫名的不安。",synonyms:["曖昧"],antonyms:["明確"],year:2023,bookmarked:false,mastered:false},
+  {id:14,kanji:"辛抱",reading:"しんぼう",meaning:"忍耐；坚持",pos:"名詞・動詞",example:"辛抱強く待つことが大切だ。",example_cn:"耐心等待是很重要的。",synonyms:["忍耐"],antonyms:[],year:2024,bookmarked:false,mastered:false},
+  {id:15,kanji:"潔い",reading:"いさぎよい",meaning:"干脆；坦然；清廉",pos:"形容詞",example:"負けを認める彼の態度は潔かった。",example_cn:"他承认失败的态度十分干脆。",synonyms:["清廉"],antonyms:["未練がましい"],year:2016,bookmarked:false,mastered:false},
+];
+
+let words=JSON.parse(localStorage.getItem('n1v2')||'null')||DEMO;
+let tab='list',search='',fPos='all',fYear='all',fBm=false;
+let page=1;const PS=10;
+let expanded=new Set();
+let fcIdx=0,fcFlip=false,fcDeck=[],fcMode='all';
+let qType='meaning',qWord=null,qOpts=[],qAnswered=false,qScore={ok:0,ng:0};
+let qTotal=10,qCount=0,qResults=[],qDone=false;
+let fillAns='',fillChecked=false;
+
+function save(){localStorage.setItem('n1v2',JSON.stringify(words))}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
+
+function filtered(){
+  return words.filter(w=>{
+    const q=search.toLowerCase();
+    const mq=!q||(w.kanji.toLowerCase().includes(q)||w.reading.includes(q)||w.meaning.includes(q));
+    const mp=fPos==='all'||w.pos.includes(fPos);
+    const my=fYear==='all'||w.year==fYear;
+    const mb=!fBm||w.bookmarked;
+    return mq&&mp&&my&&mb;
+  });
+}
+
+function render(){
+  document.getElementById('app').innerHTML=`
+    ${rHeader()}${rNav()}
+    <div class="main">${
+      tab==='list'?rList():
+      tab==='flash'?rFlash():
+      tab==='quiz'?rQuiz():rImport()
+    }</div>`;
+  bind();
+}
+
+function rHeader(){
+  const m=words.filter(w=>w.mastered).length;
+  const b=words.filter(w=>w.bookmarked).length;
+  return`<div class="header">
+    <div class="logo"><div class="logo-mark">N1</div>真題単語帳</div>
+    <div class="header-stats">
+      <div class="hstat"><span class="hstat-num">${words.length}</span>語</div>
+      <div class="hstat-dot"></div>
+      <div class="hstat"><span class="hstat-num">${m}</span>習得済</div>
+      <div class="hstat-dot"></div>
+      <div class="hstat"><span class="hstat-num">${b}</span>お気に入り</div>
+    </div>
+  </div>`;
+}
+
+function rNav(){
+  const tabs=[
+    {id:'list',icon:'📖',label:'単語一覧'},
+    {id:'flash',icon:'🃏',label:'フラッシュカード'},
+    {id:'quiz',icon:'✏️',label:'テスト'},
+    {id:'import',icon:'📥',label:'データ取込'},
+  ];
+  return`<div class="nav">${tabs.map(t=>`
+    <button class="nav-btn${tab===t.id?' active':''}" onclick="setTab('${t.id}')">
+      <span class="nav-icon">${t.icon}</span>${t.label}
+    </button>`).join('')}</div>`;
+}
+
+/* ── LIST ── */
+function rList(){
+  const f=filtered();
+  const total=f.length;
+  const pages=Math.ceil(total/PS)||1;
+  const start=(page-1)*PS;
+  const paged=f.slice(start,start+PS);
+  const posOpts=[...new Set(words.flatMap(w=>w.pos.split('・').map(p=>p.trim())))].sort();
+  const yearOpts=[...new Set(words.map(w=>w.year))].sort((a,b)=>b-a);
+  return`
+  <div class="page-title">
+    <span>📖</span>
+    <span class="page-title-text">単語一覧</span>
+    <span class="page-title-count">${total}件</span>
+  </div>
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-box" id="si" placeholder="漢字・読み・意味で検索…" value="${search}">
+    </div>
+    <select class="sel" id="pf">
+      <option value="all">品詞：すべて</option>
+      ${posOpts.map(p=>`<option value="${p}"${fPos===p?' selected':''}>${p}</option>`).join('')}
+    </select>
+    <select class="sel" id="yf">
+      <option value="all">年度：すべて</option>
+      ${yearOpts.map(y=>`<option value="${y}"${fYear==y?' selected':''}>${y}年</option>`).join('')}
+    </select>
+    <button class="btn${fBm?' active-filter':''}" onclick="toggleBmF()">
+      ${fBm?'⭐ お気に入りのみ':'☆ お気に入り'}
+    </button>
+  </div>
+  <div class="card">
+    <table class="word-table">
+      <thead><tr>
+        <th style="width:160px">単語</th>
+        <th>意味・例文</th>
+        <th style="width:130px">品詞・年度</th>
+        <th style="width:72px;text-align:center">操作</th>
+      </tr></thead>
+      <tbody>
+        ${paged.length?paged.map(rRow).join(''):`<tr><td colspan="4"><div class="empty">該当する単語が見つかりません</div></td></tr>`}
+      </tbody>
+    </table>
+  </div>
+  <div class="pager">
+    <span class="pager-info">${start+1}〜${Math.min(start+PS,total)}件 / 全${total}件</span>
+    ${pages>1?`
+      <button class="pager-btn" onclick="goP(${page-1})" ${page<=1?'disabled':''}>‹</button>
+      ${Array.from({length:Math.min(pages,7)},(_,i)=>{
+        let p=i+1;
+        if(pages>7){
+          if(page<=4)p=i+1;
+          else if(page>=pages-3)p=pages-6+i;
+          else p=page-3+i;
+        }
+        return`<button class="pager-btn${page===p?' cur':''}" onclick="goP(${p})">${p}</button>`;
+      }).join('')}
+      <button class="pager-btn" onclick="goP(${page+1})" ${page>=pages?'disabled':''}>›</button>`:''}
+  </div>`;
+}
+
+function rRow(w){
+  const ex=expanded.has(w.id);
+  return`<tr>
+    <td>
+      <div class="w-kanji">${w.kanji}</div>
+      <div class="w-reading">${w.reading}</div>
+    </td>
+    <td>
+      <div class="w-meaning">${w.meaning}</div>
+      ${ex?`<div class="w-example">
+        ${w.example}<div class="w-example-cn">${w.example_cn}</div>
+        ${w.synonyms?.length?`<div style="margin-top:4px"><span class="tag tag-syn">類義</span>${w.synonyms.join('・')}</div>`:''}
+        ${w.antonyms?.length?`<div><span class="tag tag-ant">対義</span>${w.antonyms.join('・')}</div>`:''}
+      </div>`:''}
+      <button class="expand-btn" onclick="toggleEx(${w.id})">${ex?'▲ 折りたたむ':'▼ 例文を見る'}</button>
+    </td>
+    <td>
+      <span class="tag tag-pos">${w.pos}</span>
+      <span class="tag tag-yr">${w.year}年</span>
+      ${w.mastered?`<span class="tag tag-done">✓ 習得済</span>`:''}
+    </td>
+    <td style="text-align:center;white-space:nowrap">
+      <button class="ico-btn${w.bookmarked?' gold':''}" onclick="toggleBm(${w.id})" title="${w.bookmarked?'お気に入り解除':'お気に入りに追加'}">
+        ${w.bookmarked?'⭐':'☆'}
+      </button>
+      <button class="ico-btn${w.mastered?' green':''}" onclick="toggleM(${w.id})" title="${w.mastered?'未習得に戻す':'習得済にする'}">
+        ${w.mastered?'✓':'○'}
+      </button>
+    </td>
+  </tr>`;
+}
+
+/* ── FLASHCARD ── */
+function rFlash(){
+  if(!fcDeck.length)initFC();
+  const w=fcDeck[fcIdx];
+  if(!w)return`<div class="empty">単語が登録されていません</div>`;
+  const pct=Math.round((fcIdx/fcDeck.length)*100);
+  return`
+  <div class="page-title">
+    <span>🃏</span><span class="page-title-text">フラッシュカード</span>
+  </div>
+  <div class="fc-wrap">
+    <div class="fc-mode-bar">
+      ${[['all','すべての単語'],['bookmark','お気に入りのみ'],['unmastered','未習得のみ']].map(([v,l])=>`
+        <button class="fc-mode-btn${fcMode===v?' active':''}" onclick="setFcMode('${v}')">${l}</button>`).join('')}
+    </div>
+    <div style="width:100%;max-width:520px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span class="fc-counter">${fcIdx+1} / ${fcDeck.length}</span>
+        <span style="font-size:11px;color:var(--ink3)">${pct}%</span>
+      </div>
+      <div class="fc-prog-bar"><div class="fc-prog-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="flashcard" onclick="flipFC()">
+      <div class="card-inner${fcFlip?' flipped':''}">
+        <div class="card-face card-front">
+          <div class="card-label">単語</div>
+          <div class="card-kanji">${w.kanji}</div>
+          <div class="card-hint">クリックして読みと意味を確認</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-label">読み・意味</div>
+          <div class="card-reading">${w.reading}</div>
+          <div class="card-meaning">${w.meaning}</div>
+          <div class="card-ex">${w.example}<br><span style="opacity:0.5">${w.example_cn}</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-actions">
+      <button class="fc-btn ng" onclick="fcVote(false)">✗ わからない</button>
+      <button class="fc-btn" onclick="fcPrev()">← 前へ</button>
+      <button class="fc-btn" onclick="fcNext()">次へ →</button>
+      <button class="fc-btn ok" onclick="fcVote(true)">✓ 習得済</button>
+    </div>
+  </div>`;
+}
+
+function initFC(){
+  let p=words;
+  if(fcMode==='bookmark')p=words.filter(w=>w.bookmarked);
+  if(fcMode==='unmastered')p=words.filter(w=>!w.mastered);
+  fcDeck=[...p].sort(()=>Math.random()-0.5);
+  fcIdx=0;fcFlip=false;
+}
+
+/* ── QUIZ ── */
+function rQuiz(){
+  if(qDone)return rResult();
+  if(!qWord)genQ();
+  const w=qWord;
+  if(!w)return`<div class="empty">出題できる単語が不足しています（4語以上必要）</div>`;
+  const typeLabels={meaning:'意味選択',reading:'読み選択',kanji:'漢字選択',fill:'穴埋め'};
+  return`
+  <div class="page-title">
+    <span>✏️</span><span class="page-title-text">テスト</span>
+    <span class="page-title-count">JLPT N1形式</span>
+  </div>
+  <div class="qtype-bar">
+    ${[['meaning','意味を選ぶ'],['reading','読みを選ぶ'],['kanji','漢字を選ぶ'],['fill','穴埋め']].map(([v,l])=>`
+      <button class="qtype-chip${qType===v?' on':''}" onclick="setQT('${v}')">${l}</button>`).join('')}
+  </div>
+  <div class="card" style="padding:1.5rem">
+    <div class="quiz-card">
+      <div class="quiz-hd">
+        <span class="quiz-prog-txt">第${qCount+1}問 / ${qTotal}問</span>
+        <div class="quiz-score"><span class="q-ok">○ ${qScore.ok}</span><span class="q-ng">✗ ${qScore.ng}</span></div>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${(qCount/qTotal)*100}%"></div></div>
+      ${qType==='fill'?rFill():rChoice()}
+    </div>
+  </div>`;
+}
+
+function rChoice(){
+  const w=qWord;
+  let qTxt='',qSub='';
+  if(qType==='meaning'){qTxt=w.kanji;qSub=`読み：${w.reading}`}
+  else if(qType==='reading'){qTxt=w.kanji;qSub='正しい読みを選んでください'}
+  else{qTxt=w.reading;qSub='正しい漢字を選んでください'}
+  const labs=['ア','イ','ウ','エ'];
+  return`
+  <div class="qtype-label">${{meaning:'意味選択',reading:'読み選択',kanji:'漢字選択'}[qType]}</div>
+  <div class="q-word">${qTxt}</div>
+  <div class="q-sub">${qSub}</div>
+  <div class="opts">
+    ${qOpts.map((o,i)=>{
+      let cls='opt';
+      if(qAnswered){cls+=' disabled';if(o.correct)cls+=' correct';else if(o.sel)cls+=' wrong';}
+      return`<button class="${cls}" onclick="answerC(${i})" ${qAnswered?'disabled':''}>
+        <span class="opt-ltr">${labs[i]}</span><span>${o.text}</span>
+      </button>`;
+    }).join('')}
+  </div>
+  ${qAnswered?`
+    <div class="q-explain">
+      <strong>${qOpts.find(o=>o.correct)?.text}</strong> ・ ${w.meaning}
+      <div style="font-size:11px;color:var(--ink3);margin-top:4px">${w.example} ／ ${w.example_cn}</div>
+    </div>
+    <button class="btn primary" onclick="nextQ()" style="width:100%;justify-content:center">
+      ${qCount+1>=qTotal?'結果を見る':'次の問題 →'}
+    </button>`:''}`;
+}
+
+function rFill(){
+  const w=qWord;
+  const sent=w.example.replace(w.kanji,'＿＿＿');
+  return`
+  <div class="qtype-label">穴埋め問題</div>
+  <div class="q-word" style="font-size:22px;line-height:1.6">${sent}</div>
+  <div class="q-sub">${w.example_cn}</div>
+  <input class="fill-in${fillChecked?(fillAns.trim()===w.kanji||fillAns.trim()===w.reading?' correct':' wrong'):''}"
+    id="fi" placeholder="答えを入力してください…" value="${fillAns}"
+    onchange="setFA(this.value)" ${fillChecked?'disabled':''}
+    onkeydown="if(event.key==='Enter')checkFill()">
+  ${fillChecked?`
+    <div class="q-explain">
+      正解：<strong>${w.kanji}（${w.reading}）</strong> ・ ${w.meaning}
+    </div>
+    <button class="btn primary" onclick="nextQ()" style="width:100%;justify-content:center">
+      ${qCount+1>=qTotal?'結果を見る':'次の問題 →'}
+    </button>`
+  :`<button class="btn primary" onclick="checkFill()" style="width:100%;justify-content:center">答え合わせ</button>`}`;
+}
+
+function rResult(){
+  const pct=Math.round((qScore.ok/qTotal)*100);
+  const grade=pct>=90?'🎌 優秀！ほぼ満点です！':pct>=70?'👍 良好です。継続しましょう':pct>=50?'📖 合格ライン、もう少し':' 💪 要復習。がんばりましょう';
+  const wrongs=qResults.filter(r=>!r.correct);
+  return`
+  <div class="page-title"><span>✏️</span><span class="page-title-text">テスト結果</span></div>
+  <div class="card">
+    <div class="result-wrap">
+      <div class="score-ring">
+        <div class="score-num">${qScore.ok}</div>
+        <div class="score-den">/ ${qTotal}</div>
+      </div>
+      <div class="result-title">${grade}</div>
+      <div class="result-sub">正答率 ${pct}%　正解 ${qScore.ok}問　不正解 ${qScore.ng}問</div>
+      <button class="btn primary" onclick="restartQ()">もう一度挑戦する</button>
+    </div>
+    ${wrongs.length?`
+    <div class="wrong-list">
+      <div style="font-size:12px;font-weight:500;color:var(--ink3);margin-bottom:8px;padding:0 1.5rem">間違えた単語</div>
+      ${wrongs.map(r=>`
+        <div class="wrong-item" style="padding:8px 1.5rem">
+          <span style="font-family:'Noto Serif JP',serif;font-size:18px">${r.w.kanji}</span>
+          <span style="font-size:11px;color:var(--red)">${r.w.reading}</span>
+          <span style="font-size:12px;color:var(--ink3)">${r.w.meaning}</span>
+        </div>`).join('')}
+    </div>`:`<div style="padding:1rem;text-align:center;color:var(--green);font-size:13px">🎊 全問正解！素晴らしい！</div>`}
+  </div>`;
+}
+
+function genQ(){
+  if(words.length<4)return;
+  const pool=words.filter(w=>!w.mastered).length>=4?words.filter(w=>!w.mastered):words;
+  qWord=pool[Math.floor(Math.random()*pool.length)];
+  const others=words.filter(w=>w.id!==qWord.id).sort(()=>Math.random()-0.5).slice(0,3);
+  if(qType==='meaning')qOpts=[{text:qWord.meaning,correct:true},...others.map(w=>({text:w.meaning,correct:false}))];
+  else if(qType==='reading')qOpts=[{text:qWord.reading,correct:true},...others.map(w=>({text:w.reading,correct:false}))];
+  else if(qType==='kanji')qOpts=[{text:qWord.kanji,correct:true},...others.map(w=>({text:w.kanji,correct:false}))];
+  if(qType!=='fill')qOpts=qOpts.sort(()=>Math.random()-0.5);
+  qAnswered=false;fillAns='';fillChecked=false;
+}
+
+/* ── IMPORT ── */
+function rImport(){
+  return`
+  <div class="page-title"><span>📥</span><span class="page-title-text">データ取込</span></div>
+  <div class="card" style="padding:1.25rem;margin-bottom:1.25rem">
+    <div style="font-size:13px;font-weight:500;margin-bottom:8px;color:var(--ink2)">対応フォーマット</div>
+    <div class="fmt-guide">
+      1行につき1単語、フィールドを <code>|</code> または <code>Tab</code> で区切ります：<br>
+      <code>漢字 | 読み | 意味 | 品詞 | 例文 | 例文（中国語） | 年度 | 類義語 | 対義語</code><br><br>
+      <strong>最低限必要：</strong> <code>漢字 | 読み | 意味</code>（以降は省略可）<br>
+      <strong>例：</strong><code>曖昧|あいまい|模糊不清|形容動詞|彼の態度は曖昧だ|2014|不明瞭|明確</code>
+    </div>
+  </div>
+  <div class="drop-zone" id="dz" onclick="document.getElementById('fi2').click()">
+    <div class="drop-icon">📄</div>
+    <div class="drop-title">クリックしてファイルを選択</div>
+    <div class="drop-sub">またはここにファイルをドラッグ＆ドロップ<br>.txt · .csv · .tsv（UTF-8）</div>
+    <input type="file" id="fi2" accept=".txt,.csv,.tsv" style="display:none" onchange="handleFile(this)">
+  </div>
+  <div style="text-align:center;color:var(--ink4);font-size:12px;margin:1rem 0">― または直接テキストを貼り付け ―</div>
+  <textarea class="paste-area" id="pt" placeholder="単語データをここに貼り付けてください…"></textarea>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn primary" onclick="doImport()">一括取込</button>
+    <button class="btn" onclick="doPreview()">プレビュー</button>
+    <button class="btn" onclick="clearPaste()">クリア</button>
+    <button class="btn danger" style="margin-left:auto" onclick="resetDemo()">サンプルデータに戻す</button>
+  </div>
+  <div class="import-msg" id="im"></div>`;
+}
+
+/* ── EVENTS ── */
+function bind(){
+  const si=document.getElementById('si');
+  if(si)si.addEventListener('input',e=>{search=e.target.value;page=1;render()});
+  const pf=document.getElementById('pf');
+  if(pf)pf.addEventListener('change',e=>{fPos=e.target.value;page=1;render()});
+  const yf=document.getElementById('yf');
+  if(yf)yf.addEventListener('change',e=>{fYear=e.target.value;page=1;render()});
+  const fi=document.getElementById('fi');
+  if(fi)fi.addEventListener('input',e=>{fillAns=e.target.value});
+  const dz=document.getElementById('dz');
+  if(dz){
+    dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over')});
+    dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
+    dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');if(e.dataTransfer.files[0])readFile(e.dataTransfer.files[0])});
+  }
+}
+
+function parseLine(l){
+  const s=l.includes('|')?'|':'\t';
+  const p=l.split(s).map(x=>x.trim());
+  if(p.length<3||!p[0])return null;
+  return{id:Date.now()+Math.random(),kanji:p[0],reading:p[1],meaning:p[2],pos:p[3]||'名詞',example:p[4]||`${p[0]}を使う。`,example_cn:p[5]||'',year:parseInt(p[6])||2024,synonyms:p[7]?p[7].split('・').filter(Boolean):[],antonyms:p[8]?p[8].split('・').filter(Boolean):[],bookmarked:false,mastered:false};
+}
+
+function readFile(f){const r=new FileReader();r.onload=e=>{document.getElementById('pt').value=e.target.result};r.readAsText(f,'UTF-8')}
+
+window.setTab=t=>{tab=t;render()};
+window.toggleEx=id=>{expanded.has(id)?expanded.delete(id):expanded.add(id);render()};
+window.toggleBm=id=>{const w=words.find(x=>x.id===id);if(w){w.bookmarked=!w.bookmarked;save();render()}};
+window.toggleM=id=>{const w=words.find(x=>x.id===id);if(w){w.mastered=!w.mastered;save();toast(w.mastered?'習得済にしました':'未習得に戻しました');render()}};
+window.toggleBmF=()=>{fBm=!fBm;page=1;render()};
+window.goP=p=>{const f=filtered();const ps=Math.ceil(f.length/PS)||1;if(p>=1&&p<=ps){page=p;render()}};
+window.flipFC=()=>{fcFlip=!fcFlip;render()};
+window.fcNext=()=>{fcFlip=false;fcIdx=Math.min(fcIdx+1,fcDeck.length-1);render()};
+window.fcPrev=()=>{fcFlip=false;fcIdx=Math.max(fcIdx-1,0);render()};
+window.setFcMode=m=>{fcMode=m;initFC();render()};
+window.fcVote=ok=>{const w=fcDeck[fcIdx];const i=words.findIndex(x=>x.id===w.id);if(i>=0){words[i].mastered=ok;save()}toast(ok?'習得済にしました':'未習得のままです');fcIdx=Math.min(fcIdx+1,fcDeck.length-1);fcFlip=false;render()};
+window.setQT=t=>{qType=t;qWord=null;qAnswered=false;fillAns='';fillChecked=false;render()};
+window.answerC=i=>{if(qAnswered)return;qOpts[i].sel=true;qAnswered=true;const ok=qOpts[i].correct;if(ok)qScore.ok++;else qScore.ng++;qResults.push({w:qWord,correct:ok});qCount++;if(qCount>=qTotal)qDone=true;render()};
+window.checkFill=()=>{if(fillChecked)return;fillChecked=true;const ok=fillAns.trim()===qWord.kanji||fillAns.trim()===qWord.reading;if(ok)qScore.ok++;else qScore.ng++;qResults.push({w:qWord,correct:ok});qCount++;if(qCount>=qTotal)qDone=true;render()};
+window.setFA=v=>{fillAns=v};
+window.nextQ=()=>{if(qDone){render();return}qWord=null;genQ();render()};
+window.restartQ=()=>{qScore={ok:0,ng:0};qCount=0;qDone=false;qResults=[];qWord=null;genQ();render()};
+window.handleFile=i=>{if(i.files[0])readFile(i.files[0])};
+window.doImport=()=>{
+  const t=(document.getElementById('pt').value||'').trim();
+  if(!t){document.getElementById('im').innerHTML='<span style="color:var(--red)">データを入力してください</span>';return}
+  const parsed=t.split('\n').filter(l=>l.trim()).map(parseLine).filter(Boolean);
+  if(!parsed.length){document.getElementById('im').innerHTML='<span style="color:var(--red)">有効なデータが見つかりません。フォーマットを確認してください</span>';return}
+  const ex=new Set(words.map(w=>w.kanji));
+  const nw=parsed.filter(w=>!ex.has(w.kanji));
+  words=[...words,...nw];save();
+  document.getElementById('im').innerHTML=`<span style="color:var(--green)">✓ ${nw.length}語を取り込みました（重複スキップ：${parsed.length-nw.length}語）</span>`;
+  toast(`取込完了！ +${nw.length}語`);
+  setTimeout(()=>render(),1200);
+};
+window.doPreview=()=>{
+  const t=(document.getElementById('pt').value||'').trim();
+  const parsed=t.split('\n').filter(l=>l.trim()).map(parseLine).filter(Boolean);
+  document.getElementById('im').innerHTML=`<span style="color:var(--ink2)">${parsed.length}語を認識しました。「一括取込」で確定してください</span>`;
+};
+window.clearPaste=()=>{document.getElementById('pt').value='';document.getElementById('im').innerHTML=''};
+window.resetDemo=()=>{if(confirm('サンプルデータに戻しますか？現在の単語帳はすべて削除されます。')){words=JSON.parse(JSON.stringify(DEMO));save();render()}};
+
+render();
+</script>
+</body>
+</html>
